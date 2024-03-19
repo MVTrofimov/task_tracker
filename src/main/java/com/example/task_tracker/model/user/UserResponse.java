@@ -1,6 +1,9 @@
 package com.example.task_tracker.model.user;
 
+import com.example.task_tracker.entity.RoleType;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class UserResponse {
@@ -11,5 +14,5 @@ public class UserResponse {
 
     private String email;
 
-
+    private Set<RoleType> roles;
 }

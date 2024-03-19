@@ -7,5 +7,4 @@ import reactor.core.publisher.Flux;
 
 @Repository
 public interface TaskRepository extends ReactiveMongoRepository<Task, String> {
-
 }

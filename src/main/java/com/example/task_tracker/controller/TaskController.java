@@ -6,6 +6,7 @@ import com.example.task_tracker.model.task.TaskUpsertRequest;
 import com.example.task_tracker.services.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -33,6 +34,7 @@ public class TaskController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public Mono<ResponseEntity<TaskResponse>> createTask(@RequestBody TaskUpsertRequest task){
         return taskService.save(taskMapper.requestToTask(task))
                 .map(taskMapper::taskToTaskResponse)
@@ -40,6 +42,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public Mono<ResponseEntity<TaskResponse>> updateTask(@PathVariable String id, @RequestBody TaskUpsertRequest request){
         return taskService.update(id, taskMapper.requestToTask(request))
                 .map(taskMapper::taskToTaskResponse)
@@ -56,6 +59,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public Mono<ResponseEntity<Void>> deleteTask(@PathVariable String id){
         return taskService.deleteById(id).then(Mono.just(ResponseEntity.noContent().build()));
     }
